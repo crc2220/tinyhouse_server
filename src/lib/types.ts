@@ -4,6 +4,15 @@ import { Collection, ObjectId } from "mongodb";
 // interfaces are saying to you and other developers this is the shape of data we expect
 // generics let you pass in a type as an 'argument' to allow flexibility of typing
 
+export interface Viewer {
+  _id?: string;
+  // token has session info to prevent cross-site-request forgery attacks
+  token?: string;
+  avatar?: string;
+  walletId?: string;
+  didRequest: boolean;
+}
+
 // enums help avoid mistyping/repetitive string literals
 // Pascal casing for enum member variable names
 
