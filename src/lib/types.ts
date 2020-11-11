@@ -5,6 +5,7 @@ import { Collection, ObjectId } from "mongodb";
 // generics let you pass in a type as an 'argument' to allow flexibility of typing
 
 export interface Viewer {
+  // underscore id since we're using mongodb
   _id?: string;
   // token has session info to prevent cross-site-request forgery attacks
   token?: string;

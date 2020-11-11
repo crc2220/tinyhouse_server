@@ -13,7 +13,7 @@ const logInViaGoogle = async (
   if (!user) {
     throw new Error("Google login error");
   }
-  //   optional chaining ftw
+  // optional chaining ftw
   const userName = user?.names?.[0]?.displayName;
   const userId = user?.names?.[0]?.metadata?.source?.id;
   const userAvatar = user?.photos?.[0]?.url;
@@ -23,6 +23,7 @@ const logInViaGoogle = async (
     throw new Error("Google login error");
   }
 
+  // you could think about partitioning ahead of time
   const updateRes = await db.users.findOneAndUpdate(
     {
       _id: userId,
@@ -55,6 +56,7 @@ const logInViaGoogle = async (
 
   return viewer;
 };
+
 export const viewerResolvers: IResolvers = {
   Query: {
     authUrl: (): string => {
@@ -119,6 +121,7 @@ export const viewerResolvers: IResolvers = {
       }
     },
   },
+  // Viewer object type needs to be declared it's fields are not trivial
   Viewer: {
     id: (viewer: Viewer): string | undefined => {
       return viewer._id;
