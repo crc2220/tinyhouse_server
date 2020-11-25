@@ -78,7 +78,7 @@ const logInViaGoogle = async (
 
 // run as part of logIn resolver
 // help user log-in via cookie 
-// when Google auth code not provided
+// when <App /> is rendered
 const logInViaCookie = async (
   token: string,
   db: Database,
@@ -135,10 +135,6 @@ export const viewerResolvers: IResolvers = {
         // 16 bytes to string(character array) is 16 characters
         const token = crypto.randomBytes(16).toString("hex");
 
-        // not sure how this is going to work
-        // on the frontend it's possible the user
-        // may try to log-in with just a cookie
-        // and not a google auth code  
         const viewer: User | undefined = code
           ? await logInViaGoogle(code, token, db, res)
           : await logInViaCookie(token, db, req, res);
