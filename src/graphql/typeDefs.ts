@@ -34,6 +34,7 @@ export const typeDefs = gql`
     # redirect page which backend can handle to process/extract out
     # the code query parameter - logIn mutation will be executed
     authUrl: String!
+    user: String!
   }
 
   # pass code argument of Mutation with 'input'
