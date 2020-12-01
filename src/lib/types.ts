@@ -1,6 +1,6 @@
 import { Collection, ObjectId } from "mongodb";
 
-// type definitions to assist you the programmer
+// typescript/not gql -- type definitions
 // interfaces are saying to you and other developers this is the shape of data we expect
 // generics let you pass in a type as an 'argument' to allow flexibility of typing
 
@@ -65,15 +65,15 @@ export interface Listing {
 }
 
 export interface User {
-  _id: string; // 3rd party service to authenticate users which will use string
+  _id: string; // 3rd party service(Google oAuth) to authenticate users which will use string
   token: string;
   name: string;
   avatar: string;
   contact: string;
   walletId?: string;
   income: number;
-  bookings: ObjectId[]; // one-> many - user can have multiple bookings -- oof relational
-  listings: ObjectId[]; // one-> many
+  bookings: ObjectId[]; // one-> many - user can have multiple bookings -- gql will use IDs to fetch object/fields
+  listings: ObjectId[]; // one-> many -- gql will use IDs to fetch object/fields
 }
 
 export interface Bookings {

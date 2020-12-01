@@ -1,20 +1,59 @@
 import { gql } from "apollo-server-express";
 
 // graphql fields
-// type definitions for graphql
-// to assist with gql query/mutation field mapping
+// type definitions for graphql - describes what data can be queried
+// ! means it must contain a value/cannot resolve to null
+// fields without ! may resolve/return null
+// you can say that a field accepts arguments
 
 export const typeDefs = gql`
+  enum ListingType {
+    APARTMENT
+    HOUSE
+  }
+
   type Listing {
     id: ID!
     title: String!
+    description: String!
     image: String!
+    host: User!
+    type: ListingType!
     address: String!
+    city: String!
+    bookings(limit: Int!, page: Int!): Bookings
+    bookingsIndex: String!
     price: Int!
     numOfGuests: Int!
-    numOfBeds: Int!
-    numOfBaths: Int!
-    rating: Int!
+  }
+
+  type Booking {
+    id: ID!
+    listing: Listing!
+    tenant: User!
+    checkIn: String!
+    checkOut: String!
+  }
+
+  type Bookings {
+    total: Int!
+    result: [Booking!]!
+  }
+
+  type Listings {
+    total: Int!
+    result: [Listing!]!
+  }
+
+  type User {
+    id: ID!
+    name: String!
+    avatar: String!
+    contact: String!
+    hasWallet: Boolean!
+    income: Int
+    bookings(limit: Int!, page: Int!): Bookings
+    listings(limit: Int!, page: Int!): Listings!
   }
 
   type Viewer {
@@ -34,7 +73,7 @@ export const typeDefs = gql`
     # redirect page which backend can handle to process/extract out
     # the code query parameter - logIn mutation will be executed
     authUrl: String!
-    user: String!
+    user(id: ID!): User!
   }
 
   # pass code argument of Mutation with 'input'
